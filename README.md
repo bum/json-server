@@ -138,6 +138,7 @@ POST   /posts
 PUT    /posts/1
 PATCH  /posts/1
 DELETE /posts/1
+DELETE /posts/1,2,3
 ```
 
 ### Singular routes
