@@ -321,6 +321,8 @@ module.exports = (db, name, opts) => {
     if (opts._isFake) {
       resource = db.get(name).value()
     } else {
+      
+      /*
       resource = db
         .get(name)
         .removeById(req.params.id)
@@ -333,6 +335,14 @@ module.exports = (db, name, opts) => {
           .removeById(item.id)
           .value()
       })
+      */
+      
+      req.params.id.split(',').filter(id => id !== '' || id !== undefined || id !== null).forEach(id => {
+          resource = db.get(name).removeById(id).value();
+          const removable = db._.getRemovable(db.getState(), opts);
+          removable.forEach(item => db.get(item.name).removeById(item.id).value());
+      });
+      
     }
 
     if (resource) {
